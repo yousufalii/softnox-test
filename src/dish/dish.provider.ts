@@ -10,14 +10,19 @@ export class DishProvider {
         private readonly dishRepository: DishRepository,
     ) { }
 
-    async getDishPreparationTimeAndPrice(dishId: number) {
-        try {
-            return await this.dishRepository.getDishPreparationTimeAndPrice(dishId);
-        } catch (error) {
-            throw new BadRequestException(
-                'Something went wrong while getting dish preparation time and price',
-                error
-            );
-        }
+    async getDishPreparationTimeAndPrice(dishId: number): Promise<{ price: number, preparationTime: number }> {
+        const dish = await this.dishRepository.getDishPreparationTimeAndPrice(dishId);
+        return {
+            price: dish.price,
+            preparationTime: dish.preparationTime,
+        };
+    }
+
+    async getPopularDishes(): Promise<[]> {
+        const dish = await this.dishRepository.getPopularDishes();
+        return {
+            price: dish.price,
+            preparationTime: dish.preparationTime,
+        };
     }
 }

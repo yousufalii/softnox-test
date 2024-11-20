@@ -16,7 +16,7 @@ export class Order {
     id: number;
 
     @Column({ name: 'total_cost', type: 'varchar', length: 255 })
-    totalCost: string;
+    totalCost: number;
 
     @Column({ name: 'order_time', type: 'timestamp' })
     orderTime: number;

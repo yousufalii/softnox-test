@@ -1,6 +1,6 @@
 export interface ICreateOrder {
     userId?: number,  
     restaurantId?: number, 
-    totalCost?: string,
+    totalCost?: number,
     orderTime?: number
 }

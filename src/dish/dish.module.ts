@@ -7,7 +7,7 @@ import { DishRepository } from './repository/dish.repository';
 @Module({
   imports: [TypeOrmModule.forFeature([Dish])],
   controllers: [],
-  providers: [DishRepository],
+  providers: [DishRepository, DishProvider],
   exports: [DishProvider],
 })
 export class DishModule {}

@@ -8,9 +8,21 @@ export class DishRepository {
   constructor(
     @InjectRepository(Dish)
     private dishRepository: Repository<Dish>
-  ) {}
+  ) { }
 
-  async getDishPreparationTimeAndPrice(id: number) {
-    // return this.dishRepository.findOne(createdOrder);
+  async getDishPreparationTimeAndPrice(id: number): Promise<{ price: number, preparationTime: number }> {
+    const dish = await this.dishRepository.findOne({ where: { id } });
+    return {
+      price: dish.price,
+      preparationTime: dish.preparationTime,
+    };
+  }
+
+  async getPopularDishes(): Promise<[]> {
+    const dish = await this.dishRepository.findAll();
+    return {
+      price: dish.price,
+      preparationTime: dish.preparationTime,
+    };
   }
 }
