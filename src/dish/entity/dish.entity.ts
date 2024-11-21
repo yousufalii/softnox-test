@@ -16,10 +16,10 @@ export class Dish {
     @Column({ name: 'price', type: 'float', nullable: true })
     price: number | null;
 
-    @Column({ name: 'popularity_score', type: 'varchar', length: 255 })
-    popularityScore: string;
+    @Column({ name: 'popularity_score', type: 'int' })
+    popularityScore: number;
 
-    @Column({ name: 'preparation_time', type: 'varchar', length: 255 })
+    @Column({ name: 'preparation_time', type: 'int' })
     preparationTime: number;
 
     @Column({ name: 'availability_status', type: 'boolean' })

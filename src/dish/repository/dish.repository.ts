@@ -18,11 +18,10 @@ export class DishRepository {
     };
   }
 
-  async getPopularDishes(): Promise<[]> {
-    const dish = await this.dishRepository.findAll();
-    return {
-      price: dish.price,
-      preparationTime: dish.preparationTime,
-    };
+  async getDishesByPopularityScore(restaurantId: number) {
+    return this.dishRepository.createQueryBuilder('dish')
+      .where('dish.restaurant_id = :restaurantId', { restaurantId })  
+      .orderBy('dish.popularity_score', 'DESC') 
+      .getMany();  
   }
 }

@@ -18,11 +18,8 @@ export class DishProvider {
         };
     }
 
-    async getPopularDishes(): Promise<[]> {
-        const dish = await this.dishRepository.getPopularDishes();
-        return {
-            price: dish.price,
-            preparationTime: dish.preparationTime,
-        };
+    async getPopularDishes(restaurantId: number) {
+        const dish = await this.dishRepository.getDishesByPopularityScore(restaurantId);
+        return dish
     }
 }

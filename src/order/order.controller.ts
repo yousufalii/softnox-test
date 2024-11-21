@@ -21,9 +21,8 @@ export class OrderController {
       return newOrder;
     }
 
-    @Get()
-    async getActiveOrders(@Request() req) {
-      const newOrder = await this.orderProvider.createOrder({ ...order });
-      return newOrder;
+    @Get('/active-or-incomplete')
+    async getActiveOrIncompleteOrders() {
+      return await this.orderProvider.getActiveOrIncompleteOrders();
     }
 }

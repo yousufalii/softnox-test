@@ -1,24 +1,17 @@
 import {
-    Body,
     Controller,
-    Post,
-    UseGuards,  
-    Request,
     Get,
 } from '@nestjs/common';
-import { ApiBody, ApiTags } from '@nestjs/swagger';
-// import { DishProvider } from './dish.provider';
+import { ApiTags } from '@nestjs/swagger';
+import { DeliveryProvider } from './delivery.provider';
 
-@ApiTags('dish')
-@Controller('dish')
-export class OrderController {
-    constructor(private readonly dishProvider) { }
+@ApiTags('delivery')
+@Controller('delivery')
+export class DeliveryController {
+    constructor(private readonly deliveryProvider: DeliveryProvider) { }
 
-    // get average delivery time
-
-    // @Get('/analytics/popular-dishes')
-    // async getPopularDishes() {
-    //   const newOrder = await this.dishProvider.getPopularDishes();
-    //   return newOrder;
-    // }
+    @Get('/analytics/delivery-time')
+    async getOrdersAverageDeliveryTime() {
+      return await this.deliveryProvider.getOrdersAverageDeliveryTime();
+    }
 }
