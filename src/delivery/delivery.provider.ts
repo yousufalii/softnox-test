@@ -1,8 +1,6 @@
 import {
     BadRequestException,
-    ConflictException,
     Injectable,
-    NotFoundException,
 } from '@nestjs/common';
 import { DeliveryRepository } from './repository/delivery.repository';
 

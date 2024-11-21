@@ -8,9 +8,4 @@ import { ApiTags } from '@nestjs/swagger';
 @Controller('restaurants')
 export class RestaurantController {
     constructor() { }
-
-    @Post()
-    async createUser() {
-        return `New user created`;
-    }
 }

@@ -42,7 +42,7 @@ export class OrderProvider {
             return await this.orderRepository.getActiveOrIncompleteOrders()
         } catch (error) {
             throw new BadRequestException(
-                'Something went wrong while creating order',
+                'Something went wrong while getting order',
                 error
             );
         }
