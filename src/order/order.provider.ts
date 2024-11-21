@@ -1,24 +1,34 @@
 import {
     BadRequestException,
-    ConflictException,
+    Inject,
     Injectable,
-    NotFoundException,
 } from '@nestjs/common';
 import { OrderRepository } from './repository/order.respository';
 import { CreateOrderDto } from './dto/createOrder.dto';
 import { DishProvider } from 'src/dish/dish.provider';
+import { ClientKafka } from '@nestjs/microservices';
 
 @Injectable()
 export class OrderProvider {
     constructor(
         private readonly orderRepository: OrderRepository,
         private readonly dishProvider: DishProvider,
+        @Inject('KAFKA_SERVICE') private readonly kafkaClient: ClientKafka, 
     ) { }
 
     async createOrder(order: CreateOrderDto) {
         try {
             const dish = await this.dishProvider.getDishPreparationTimeAndPrice(order.dishId);
-            return await this.orderRepository.createOrder({ ...order, totalCost: dish.price, orderTime: dish.preparationTime });
+
+            const createdOrder = await this.orderRepository.createOrder({
+                ...order,
+                totalCost: dish.price,
+                orderTime: dish.preparationTime,
+            });
+
+            this.publishOrderCreatedEvent(createdOrder);
+
+            return createdOrder;
         } catch (error) {
             throw new BadRequestException(
                 'Something went wrong while creating order',
@@ -36,5 +46,17 @@ export class OrderProvider {
                 error
             );
         }
+    }
+
+    private async publishOrderCreatedEvent(order) {
+        const message = {
+            orderId: order.id,
+            dishId: order.dishId,
+            totalCost: order.totalCost,
+            orderTime: order.orderTime,
+            createdAt: order.createdAt,
+        };
+
+        await this.kafkaClient.emit('order.created', message);
     }
 }

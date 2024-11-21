@@ -5,9 +5,10 @@ import { OrderController } from './order.controller';
 import { OrderProvider } from './order.provider';
 import { OrderRepository } from './repository/order.respository';
 import { DishModule } from 'src/dish/dish.module';
+import { KafkaConsumerModule } from 'src/kafka/kafka-consumer.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Order]), DishModule],
+  imports: [TypeOrmModule.forFeature([Order]), DishModule, KafkaConsumerModule],
   controllers: [OrderController],
   providers: [OrderProvider, OrderRepository],
   exports: [],

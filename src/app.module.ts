@@ -8,6 +8,7 @@ import { OrderModule } from './order/order.module';
 import { DeliveryModule } from './delivery/delivery.module';
 import { DishModule } from './dish/dish.module';
 import { ClientsModule, Transport } from '@nestjs/microservices';
+import { KafkaConsumerModule } from './kafka/kafka-consumer.module';
 
 @Module({
   imports: [
@@ -20,20 +21,7 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
     DishModule,
     OrderModule,
     DeliveryModule,
-    ClientsModule.register([
-      {
-        name: 'KAFKA_SERVICE',
-        transport: Transport.KAFKA, 
-        options: {
-          client: {
-            brokers: ['localhost:9092'], 
-          },
-          consumer: {
-            groupId: 'nestjs-consumer-group', 
-          },
-        },
-      },
-    ]),
+    KafkaConsumerModule
   ],
   controllers: [],
   providers: [],
