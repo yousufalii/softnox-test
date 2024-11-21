@@ -7,6 +7,7 @@ import { RestaurantModule } from './restaurant/restaurant.module';
 import { OrderModule } from './order/order.module';
 import { DeliveryModule } from './delivery/delivery.module';
 import { DishModule } from './dish/dish.module';
+import { ClientsModule, Transport } from '@nestjs/microservices';
 
 @Module({
   imports: [
@@ -18,7 +19,21 @@ import { DishModule } from './dish/dish.module';
     RestaurantModule,
     DishModule,
     OrderModule,
-    DeliveryModule
+    DeliveryModule,
+    ClientsModule.register([
+      {
+        name: 'KAFKA_SERVICE',
+        transport: Transport.KAFKA, 
+        options: {
+          client: {
+            brokers: ['localhost:9092'], 
+          },
+          consumer: {
+            groupId: 'nestjs-consumer-group', 
+          },
+        },
+      },
+    ]),
   ],
   controllers: [],
   providers: [],
